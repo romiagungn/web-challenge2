@@ -22,7 +22,7 @@ app.use("/", express.static(path.join(__dirname, "views")));
 
 app.get("/", (req, res) => {
     const sql = "SELECT * FROM crud";
-    db.all(sql, [], (err, db) => {
+    db.all(sql, (err, db) => {
     if (err) {
     return console.error(err.message);
         }
@@ -31,17 +31,10 @@ app.get("/", (req, res) => {
 });
 
 app.post('/add',(req, res) => {
-  let data = {
-    id: req.body.id,
-    string: req.body.string,
-    integer: req.body.integer,
-    float: req.body.float,
-    date: req.body.date,
-    boolean: req.body.boolean
-  };
-  let sql = "INSERT INTO crud (id, string, integer, float, date, boolean) VALUES (?,?,?,?,?,?)";
-  let param = [data.id, data.string, data.integer, data.float, data.date, data.boolean];
-  db.run(sql, param, (err,) => {
+  const { string, integer, float, date, boolean } = req.body;
+  let sql = `INSERT INTO crud (string, integer, float, date, boolean)
+              VALUES ('${string}', '${integer}', '${float}', '${date}', '${boolean}')`;
+  db.run(sql, (err,) => {
     if (err) {
     return console.error(err.message);
         }
@@ -50,26 +43,18 @@ app.post('/add',(req, res) => {
 });
 
 app.post('/edit', (req,res) => {
-  // const data = {
-  //   id: req.body.id,
-  //   string: req.body.string,
-  //   integer: req.body.integer,
-  //   float: req.body.float,
-  //   date: req.body.date,
-  //   boolean: req.body.boolean
-  // };
-
-  // let sqleditData = `UPDATE crud SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?`;
-  let sqleditData2 = "UPDATE crud SET  string '"+req.body.string+"' WHERE id = "+req.body.id;
-  // let param = [data.string, data.integer, data.float, data.date, data.boolean, data.id];
-      db.run(sqleditData2, (err) => {
+  const { string, integer, float, date, boolean, id } = req.body;
+  let sqleditData = `UPDATE crud SET string = '${string}', integer = '${integer}', float = '${float}',
+                    date = '${date}', boolean = '${boolean}'
+                    WHERE id = '${id}';`
+  console.log(sqleditData);
+      db.run(sqleditData, (err) => {
         if (err) {
         return console.error(err.message);
             }
             res.redirect('/');
         });
-
-})
+      })
 
 app.post('/hapus',(req, res) => {
   const id = req.body.id;
