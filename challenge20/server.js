@@ -24,24 +24,30 @@ app.get("/", (req, res) => {
     let result = [];
     let dataFilter = false;
 
-    // if (req.query.check_id && req.query.id) {
-    //   console.log('id masuk');
-    //   result.push(`id = ${parseInt(req.query.id)}`);
-    //   dataFilter = true;
-    // }
-    // if (req.query.check_string && req.query.string) {
-    //   console.log('string masuk');
-    //   result.push(`string = '${req.query.string}'`);
-    //   dataFilter = true;
-    // }
-      // if (req.query.check_integer && req.query.integer) {
-      //   console.log('ini masuk');
-      //   result.push(`integer = '${req.query.integer}'`)
-      //   dataFilter = true;
-      // }
+    if (req.query.check_id && req.query.id) {
+      result.push(`id = ${parseInt(req.query.id)}`);
+      dataFilter = true;
+    }
+    if (req.query.check_string && req.query.string) {
+      result.push(`string = '${req.query.string}'`);
+      dataFilter = true;
+    }
+      if (req.query.check_integer && req.query.integer) {
+        result.push(`integer = '${req.query.integer}'`)
+        dataFilter = true;
+      }
       if (req.query.check_float && req.query.float){
-        console.log('ini masuk');
         result.push(`float = '${req.query.float}'`);
+        dataFilter = true;
+      }
+      if (req.query.startDate && req.query.endDate && req.query.check_date){
+        console.log('ini masuk');
+        result.push(`date BETWEEN '${req.query.startDate}' AND '${req.query.endDate}'`);
+        dataFilter = true;
+      }
+      if (req.query.check_boolean && req.query.boolean) {
+        console.log('ini masuk');
+        result.push(`boolean = '${req.query.boolean}'`);
         dataFilter = true;
       }
     let sql2 = `SELECT * FROM crud`;
