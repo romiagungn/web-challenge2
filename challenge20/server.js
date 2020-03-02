@@ -29,12 +29,21 @@ app.get("/", (req, res) => {
     //   result.push(`id = ${parseInt(req.query.id)}`);
     //   dataFilter = true;
     // }
-    if (req.query.check_string && req.query.string) {
-      console.log('string masuk');
-      result.push(`string = '${req.query.string}'`);
-      dataFilter = true;
-    }
-
+    // if (req.query.check_string && req.query.string) {
+    //   console.log('string masuk');
+    //   result.push(`string = '${req.query.string}'`);
+    //   dataFilter = true;
+    // }
+      // if (req.query.check_integer && req.query.integer) {
+      //   console.log('ini masuk');
+      //   result.push(`integer = '${req.query.integer}'`)
+      //   dataFilter = true;
+      // }
+      if (req.query.check_float && req.query.float){
+        console.log('ini masuk');
+        result.push(`float = '${req.query.float}'`);
+        dataFilter = true;
+      }
     let sql2 = `SELECT * FROM crud`;
     if(dataFilter == true) {
       sql2 = sql2 + ` WHERE ${result.join(' AND ')}`
