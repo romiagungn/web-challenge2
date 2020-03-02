@@ -51,26 +51,22 @@
             </div>
             <div class="form-group row">
                 <label class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" id="defaultCheck1"> Date
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_date" <%= query.check_date ? ' checked ' : '' %>> Date
                 </label>
                 <div class="col-sm-2">
-                    <input type="date" class="form-control" placeholder="Start Date" name="startDate">
+                    <input type="date" class="form-control" placeholder="Start Date" name="startDate" value="<%= query.startDate %>">
                 </div>
                 <label class="col-sm-1 col-form-label">TO</label>
                 <div class="col-sm-2">
-                    <input type="date" class="form-control" placeholder="End Date" name="endDate">
+                    <input type="date" class="form-control" placeholder="End Date" name="endDate" value="<%= query.endDate %>">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" id="defaultCheck1" > Boolean
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_boolean" <%= query.check_boolean ? ' checked ' : '' %> > Boolean
                 </label>
                 <div class="col-sm-7">
-                    <select class="form-control" id="exampleFormControlSelect1" placeholder="Choose the Boolean...">
-                        <option selected>Choose the Boolean...</option>
-                        <option value="true">true</option>
-                        <option value="false">false</option>
-                    </select>
+                    <input type="text" class="form-control" placeholder="Boolean" name="boolean" value="<%= query.boolean %>">
                     </div>
                 </div>
             </div>
