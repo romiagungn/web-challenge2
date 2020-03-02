@@ -24,9 +24,14 @@ app.get("/", (req, res) => {
     let result = [];
     let dataFilter = false;
 
-    if (req.query.check_id && req.query.id) {
-      console.log('id masuk');
-      result.push(`id = ${parseInt(req.query.id)}`)
+    // if (req.query.check_id && req.query.id) {
+    //   console.log('id masuk');
+    //   result.push(`id = ${parseInt(req.query.id)}`);
+    //   dataFilter = true;
+    // }
+    if (req.query.check_string && req.query.string) {
+      console.log('string masuk');
+      result.push(`string = '${req.query.string}'`);
       dataFilter = true;
     }
 
