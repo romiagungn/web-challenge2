@@ -21,12 +21,25 @@ app.use(bodyParser.json())
 app.use("/", express.static(path.join(__dirname, "views")));
 
 app.get("/", (req, res) => {
-    const sql = "SELECT * FROM crud";
-    db.all(sql, (err, db) => {
+    let result = [];
+    let dataFilter = false;
+
+    if (req.query.check_id && req.query.id) {
+      console.log('id masuk');
+      result.push(`id = ${parseInt(req.query.id)}`)
+      dataFilter = true;
+    }
+
+    let sql2 = `SELECT * FROM crud`;
+    if(dataFilter == true) {
+      sql2 = sql2 + ` WHERE ${result.join(' AND ')}`
+      console.log(sql2)
+    }
+    db.all(sql2, (err, row) => {
     if (err) {
     return console.error(err.message);
         }
-        res.render("index", { data: db });
+        res.render("index", { data: row, query: req.query });
     });
 });
 
