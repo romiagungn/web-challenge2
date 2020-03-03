@@ -66,7 +66,11 @@
                     <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_boolean" <%= query.check_boolean ? ' checked ' : '' %> > Boolean
                 </label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" placeholder="Boolean" name="boolean" value="<%= query.boolean %>">
+                    <select id="boolean" class="form-control" name="boolean">
+                        <option disabled selected>Choose the boolean...</option>
+                        <option value="true" <%= query.check_boolean == "true" ? ' selected' : ''; %></option>True</option>
+                        <option value="false" <%= query.check_boolean == "false" ? ' selected' : ''; %></option>False</option>
+                    </select>
                     </div>
                 </div>
             </div>
