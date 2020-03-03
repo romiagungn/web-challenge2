@@ -70,7 +70,7 @@ app.get("/", (req, res) => {
     let sql = `SELECT * FROM crud`;
     if (dataFilter == true) {
       sql = sql + ` WHERE ${result.join(' AND ')}`
-      // console.log(sql)
+      console.log(sql)
     }
     sql = sql + ` LIMIT ${limit} OFFSET ${offset}`;
     // console.log(sql);
