@@ -12,8 +12,8 @@ const pool = new Pool({
   port: 5432,
 })
 
-var indexRouter = require('./routes/index')(pool);
-
+var indexRouter = require('./routes/index');
+var breadRouter = require('./routes/bread')(pool);
 var app = express();
 
 // view engine setup
@@ -27,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/bread', breadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

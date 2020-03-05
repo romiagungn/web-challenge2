@@ -1,11 +1,239 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<!doctype html>
+
+<html lang="en">
+ <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Challenges 21</title>
+    </head>
+    <body>
+    <h1 class="container">BREAD(Browse,Read,Edit,Add,Delete)</h1>
+    <h1 class="container">Filter</h1>
+    <div class="container">
+        <form method="GET">
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_id" >
+                    ID
+                </label>
+                <div class="col-sm-7">
+                    <input type="number" value="" class="form-control" id="id" name ="id" placeholder="ID">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_string" > String
+                </label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name ="string" id="string" placeholder="String" value ="">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_integer" > Integer
+                </label>
+                <div class="col-sm-7">
+                    <input type="number" class="form-control" placeholder="Integer" id="integer" name="integer" value="">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name ="check_float" > Float
+                </label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="float" placeholder="Float" name="float" value="">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_date" > Date
+                </label>
+                <div class="col-sm-2">
+                    <input type="date" class="form-control" placeholder="Start Date" name="startDate" value="">
+                </div>
+                <label class="col-sm-1 col-form-label">TO</label>
+                <div class="col-sm-2">
+                    <input type="date" class="form-control" placeholder="End Date" name="endDate" value="">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label">
+                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_boolean">Boolean
+                </label>
+                <div class="col-sm-7">
+                    <select id="boolean" class="form-control" name="boolean">
+                        <option disabled selected>Choose the boolean...</option>
+                        <option value="true"> True</option>
+                        <option value="false"><False</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="form-group row">
+                    <div class="col-sm-7">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a href="/" class="btn btn-danger">Reset</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+            <table class="table table-striped container">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">String</th>
+                    <th scope="col">Integer</th>
+                    <th scope="col">Float</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Boolean</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                </table>
+
+        <!-- modal add -->
+                <div class="modal-body container">
+                    <form method = "POST"  id="form-add">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">String</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="string" id="addString" placeholder="String">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Integer</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="integer"  id="addInteger" placeholder="Integer">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Float</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="float" id="addFloat" placeholder="Float">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label"> Date</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" name="date" id="addDate">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputBoolean" class="col-sm-2 col-form-label">Boolean</label>
+                            <div class="col-sm-8">
+                              <select class="custom-select" id="addBoolean" name="boolean">
+                                <option value="true">true</option>
+                                <option value="false">false</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="form-group row">
+                                <div class="col-sm-8">
+                                    <button type="submit" class="btn btn-primary" >Save</button>
+                                    <a href="/" type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+    const API_URL = 'http://localhost:3000/bread';
+
+    $(document).ready(() => {
+        loadData();
+        //eventlistener
+        $('#form-add').submit((e) => {
+            e.preventDefault();
+            tambahData();
+        })
+
+        $('table tbody').on("click", ".btn-delete", (event) => {
+            removeData(event.currentTarget.attributes.dataid.value);
+        })
+    });
+
+    const loadData = () => {
+        $.ajax({
+        method: "GET",
+        url: API_URL,
+        dataType: "json"
+        })
+        .done(( data ) => {
+        let html = '';
+        data.forEach(item => {
+            html += `<tr>
+            <td scope="row">${item.id}</td>
+            <td>${item.string}</td>
+            <td>${item.integer}</td>
+            <td>${item.float}</td>
+            <td>${item.date}</td>
+            <td>${item.boolean}</td>
+            <td>
+            <button type="button" class = "btn btn-info btn-edit btn-sm" dataid = "${item.id}">Edit
+            <button type="button" class = "btn btn-danger btn-delete btn-sm" dataid = "${item.id}">Delete
+            </td>
+            </tr>`
+        });
+        $('table tbody').html(html);
+        });
+    }
+
+    const tambahData = () => {
+        $.ajax({
+            method: "POST",
+            url: API_URL,
+            dataType: 'json',
+            data: {
+                string : $('#addString').val(),
+                integer : $('#addInteger').val(),
+                float : $('#addFloat').val(),
+                date : $('#addDate').val(),
+                boolean : $('#addBoolean').val(),
+            }
+        })
+        .done((data) => {
+            loadData();
+        })
+        .fail((err) => {
+            console.log('terjadi error',err)
+        })
+    }
+    const removeData = (id) => {
+        $.ajax({
+            method : "DELETE",
+            url : `${API_URL}/${id}`,
+            dataType : 'json'
+        })
+        .done((data) => {
+            loadData();
+        })
+        .fail((err) => {
+            console.log('terjadi error',err)
+        })
+    }
+    
+    </script>
+</body>
 </html>
