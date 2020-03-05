@@ -21,7 +21,7 @@
                     ID
                 </label>
                 <div class="col-sm-7">
-                    <input type="number" value="" class="form-control" id="id" name ="id" placeholder="ID">
+                    <input type="number" value="" class="form-control" id="id" name ="id" placeholder="ID" value="">
                 </div>
             </div>
             <div class="form-group row">
@@ -99,7 +99,24 @@
                 </tbody>
                 </table>
 
+                <div class="container">
+                    <div class="form-group row">
+                        <div class="col-sm-7">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">Add</button>
+                        </div>
+                    </div>
+                </div>
+
         <!-- modal add -->
+        <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAdd2" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalAdd2">Add Data</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
                 <div class="modal-body container">
                     <form method = "POST"  id="form-add">
                         <div class="form-group row">
@@ -144,7 +161,76 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- modal edit -->
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEdit2">Edit Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="form-edit">
+                    <div class="form-group row">
+                        <label for="id" class="col-sm-2 col-form-label">ID</label>
+                        <div class="col-sm-9">
+                            <input type="text" id ="inputId" name="id" class="form-control id" required disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">String</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control string" id="inputString" name="string" placeholder="String" value="" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Integer</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control integer" id="intpuInteger" name="integer" placeholder="Integer" value="" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Float</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control float" id="inputFloat" name="float" placeholder="Float"value="" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Date</label>
+                        <div class="col-sm-9">
+                            <input class="form-control date" type="date" id="inputDate" name="date" value="" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Boolean</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="inputBoolean" name="boolean" >
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="form-group row"></div>
+                            <div class="col-sm-7">
+                                <button type="submit" id="" class="btn btn-outline-primary btn-save" dataid=""
+                                data-dismiss="modal">Save</button>
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -170,9 +256,34 @@
         })
 
         $('table tbody').on("click", ".btn-delete", (event) => {
+            event.preventDefault();
             removeData(event.currentTarget.attributes.dataid.value);
         })
+        $('table tbody').on('click', '.btn-edit', (event) => {
+            showData(event.currentTarget.attributes.dataid.value);
+        })
     });
+
+    const showData = (id) => {
+        $.ajax({
+        method: "GET",
+        url: `${API_URL}/${id}`,
+        dataType: 'json'
+      })
+      .done((data) => {
+        data.forEach(item => {
+            $('#inputId').val(item.id);
+            $('#inputString').val(item.string);
+            $('#intpuInteger').val(item.integer);
+            $('#inputFloat').val(item.float);
+            $('#inputDate').val(item.date);
+            $('#inputBoolean').val(item.boolean);
+            })
+        })
+        .fail((err) => {
+            console.log('terjadi error',err)
+        })
+    }
 
     const loadData = () => {
         $.ajax({
@@ -191,7 +302,8 @@
             <td>${item.date}</td>
             <td>${item.boolean}</td>
             <td>
-            <button type="button" class = "btn btn-info btn-edit btn-sm" dataid = "${item.id}">Edit
+            <button type="button" class = "btn btn-info btn-edit btn-sm" dataid = "${item.id}"
+            data-toggle="modal" data-target="#modalEdit">Edit
             <button type="button" class = "btn btn-danger btn-delete btn-sm" dataid = "${item.id}">Delete
             </td>
             </tr>`
@@ -215,6 +327,7 @@
         })
         .done((data) => {
             loadData();
+            location.replace('/')
         })
         .fail((err) => {
             console.log('terjadi error',err)
@@ -233,7 +346,7 @@
             console.log('terjadi error',err)
         })
     }
-    
+
     </script>
 </body>
 </html>
