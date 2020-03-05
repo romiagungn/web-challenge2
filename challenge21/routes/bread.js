@@ -4,7 +4,7 @@ var router = express.Router();
 module.exports = (pool) => {
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  pool.query('SELECT * from bread', (err, data) => {
+  pool.query('SELECT * from bread ORDER BY id ASC', (err, data) => {
     if(err) return res.send(err);
     res.json(data.rows);
   });
@@ -27,8 +27,12 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  pool.query('UPDATE bread SET string = $1, integer = $2, float = $3, date = $4, boolean = $5 WHERE id = $6',
-  [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean, req.params.id], (err, data) => {
+  let id = req.params.id;
+  const { string, integer, float, date, boolean } = req.body
+  let sql = `UPDATE bread SET string = '${string}', integer = ${integer},
+            float = '${float}', date = '${date}', boolean = ${boolean} WHERE id = ${id} `;
+  console.log(sql)
+  pool.query(sql, (err, data) => {
     if(err) return res.send(err);
     res.json(data);
   });
