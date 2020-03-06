@@ -215,8 +215,6 @@
                         <div class="col-sm-9">
                             <select class="form-control" id="inputBoolean" name="boolean" >
                                 <option selected disabled>Choose the boolean...</option>
-                                <option value="false">false</option>
-                                <option value="true" >true</option>
                             </select>
                             </div>
                         </div>
@@ -274,38 +272,25 @@
         dataType: 'json'
       })
       .done((data) => {
+        let a = '';
         data.forEach(item => {
-            let html = '';
             $('#submit-data').attr('dataid', item.id);
             $('#inputId').val(item.id);
             $('#inputString').val(item.string);
             $('#inputInteger').val(item.integer);
             $('#inputFloat').val(item.float);
             $('#inputDate').val(item.date);
-            $('#inputboolean').val(item.boolean);
-          })
+            if (item.boolean) {
+                a += `  <option selected disabled>Choose the boolean...</option>
+                        <option value="true" selected>true</option>
+                        <option value="false" >false</option>`
+            } else {
+                a += `  <option selected disabled>Choose the boolean...</option>
+                        <option value="true">true</option>
+                        <option value="false" selected>false</option>`
+            }
         })
-        .fail((err) => {
-            console.log('terjadi error',err)
-        })
-    }
-
-    const updateData = (id) => {
-        $.ajax({
-            method : "PUT",
-            url: `${API_URL}/${id}`,
-            dataType: 'json',
-            data : {
-                id: `'${id}'`,
-                string: $('#inputString').val(),
-                integer: $('#inputInteger').val(),
-                float: $('#inputFloat').val(),
-                date: $('#inputDate').val(),
-                boolean: $('#inputBoolean').val(),
-            },
-        })
-        .done( (data) => {
-            loadData();
+        $('#inputBoolean').html(a);
         })
         .fail((err) => {
             console.log('terjadi error',err)
@@ -355,6 +340,28 @@
         .done((data) => {
             loadData();
             location.replace('/')
+        })
+        .fail((err) => {
+            console.log('terjadi error',err)
+        })
+    }
+
+    const updateData = (id) => {
+        $.ajax({
+            method : "PUT",
+            url: `${API_URL}/${id}`,
+            dataType: 'json',
+            data : {
+                id: `'${id}'`,
+                string: $('#inputString').val(),
+                integer: $('#inputInteger').val(),
+                float: $('#inputFloat').val(),
+                date: $('#inputDate').val(),
+                boolean: $('#inputBoolean').val(),
+            },
+        })
+        .done( (data) => {
+            loadData();
         })
         .fail((err) => {
             console.log('terjadi error',err)
