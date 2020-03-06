@@ -2,51 +2,68 @@ var express = require('express');
 var router = express.Router();
 
 module.exports = (pool) => {
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  pool.query('SELECT * from bread ORDER BY id ASC', (err, data) => {
-    if(err) return res.send(err);
-    res.json(data.rows);
-  });
-});
+    /* GET home page. */
+    router.get('/', (req, res, next) => {
+      let result = [];
+      let sql = 'SELECT * from bread';
+      let input = req.query;
 
-router.get('/:id', (req, res, next) => {
-  pool.query('SELECT * from bread where id = $1 ',[req.params.id], (err, data) => {
-    if(err) return res.send(err);
-    res.json(data.rows);
-  });
-});
+      if (input.check_id && input.searchid) {
+        result.push(`id=${input.searchid}`);
+      }
+      if (result.length > 0) {
+        sql += ` WHERE ${result.join(' AND ')}`
+        console.log(sql)
+      }
+      console.log(result)
 
-router.post('/', (req, res, next) => {
-  console.log(req.body)
-  pool.query(`INSERT INTO bread (string, integer, float, date, boolean) VALUES ($1, $2, $3, $4, $5)`,
-  [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean], (err, data) => {
-    if(err) return res.send(err);
-    res.json(data);
-  });
-});
+      sql += ' order by id asc';
+      console.log(sql);
+      pool.query(sql, (err, data) => {
+        if(err) return res.send(err);
+        let result = data.rows.map(item => {
+          item.string = item.string ? item.string : 'kosong'
+          return item
+      });
+      res.status(200).json({
+        result,
+        query: req.query
+      })
+    })
+  })
+            router.get('/:id', (req, res, next) => {
+              pool.query('SELECT * from bread where id = $1 ', [req.params.id], (err, data) => {
+                if (err) return res.send(err);
+                res.json(data.rows);
+              });
+            });
 
-router.put('/:id', (req, res, next) => {
-  let id = req.params.id;
-  const { string, integer, float, date, boolean } = req.body
-  let sql = `UPDATE bread SET string = '${string}', integer = ${integer},
-            float = '${float}', date = '${date}', boolean = ${boolean} WHERE id = ${id} `;
-  console.log(sql)
-  pool.query(sql, (err, data) => {
-    if(err) return res.send(err);
-    res.json(data);
-  });
-});
+            router.post('/', (req, res, next) => {
+              console.log(req.body)
+              pool.query(`INSERT INTO bread (string, integer, float, date, boolean) VALUES ($1, $2, $3, $4, $5)`,
+                [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean], (err, data) => {
+                  if (err) return res.send(err);
+                  res.json(data);
+                });
+            });
 
-router.delete('/:id', (req, res, next) => {
-  console.log(req.params)
-  pool.query('DELETE FROM bread WHERE id = $1', [req.params.id], (err, data) => {
-    // if(err) return res.send(err);
-    if(err) return res.send(err)
-    res.json(data);
-  });
-});
+            router.put('/:id', (req, res, next) => {
+              pool.query(`UPDATE bread SET string = $2 , integer = $3 , float = $4, date = $5 , boolean = $6 WHERE id = $1`,
+                [req.params.id, req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean], (err, data) => {
+                  if (err) return res.send(err);
+                  res.json(data);
+                });
+            });
+
+            router.delete('/:id', (req, res, next) => {
+              console.log(req.params)
+              pool.query('DELETE FROM bread WHERE id = $1', [req.params.id], (err, data) => {
+                // if(err) return res.send(err);
+                if (err) return res.send(err)
+                res.json(data);
+              });
+            });
 
 
-return router;
-}
+            return router;
+          }
