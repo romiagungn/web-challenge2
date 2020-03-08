@@ -12,12 +12,24 @@ module.exports = (pool) => {
         result.push(`id=${input.searchid}`);
       }
       if (input.check_string && input.searchString) {
-        result.push(`string='${input.searchString}'`)
+        result.push(`string='${input.searchString}'`);
+      }
+      if (input.check_integer && input.searchInteger){
+        result.push(`integer=${input.searchInteger}`);
+      }
+      if(input.check_float && input.searchFloat) {
+        result.push(`float='${input.searchFloat}'`)
+      }
+      if (input.startDate && input.endDate && input.check_date) {
+        console.log('ini masuk');
+        result.push(`date BETWEEN '${input.startDate}' AND '${input.endDate}'`);
+      }
+      if (input.check_boolean && input.boolean) {
+        result.push(`boolean = '${input.boolean}'`);
       }
       if (result.length > 0) {
         sql += ` WHERE ${result.join(' AND ')}`
-        console.log(sql)
-      } 
+      }
       console.log(result)
 
       sql += ' order by id asc';
