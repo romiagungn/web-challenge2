@@ -11,10 +11,13 @@ module.exports = (pool) => {
       if (input.check_id && input.searchid) {
         result.push(`id=${input.searchid}`);
       }
+      if (input.check_string && input.searchString) {
+        result.push(`string='${input.searchString}'`)
+      }
       if (result.length > 0) {
         sql += ` WHERE ${result.join(' AND ')}`
         console.log(sql)
-      }
+      } 
       console.log(result)
 
       sql += ' order by id asc';
@@ -22,7 +25,6 @@ module.exports = (pool) => {
       pool.query(sql, (err, data) => {
         if(err) return res.send(err);
         let result = data.rows.map(item => {
-          item.string = item.string ? item.string : 'kosong'
           return item
       });
       res.status(200).json({
