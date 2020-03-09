@@ -15,6 +15,7 @@
     <h1 class="container">Filter</h1>
     <div class="container">
         <form id = "search">
+            <input type="hidden" id="page" name="page" value="1">
             <div class="form-group row">
                 <label for="id" class="col-sm-1 col-form-label">
                     <input class="form-check-input" type="checkbox" name="check_id">
@@ -94,6 +95,12 @@
                 <tbody>
                 </tbody>
                 </table>
+
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    </ul>
+                </nav>
 
                 <div class="container">
                     <div class="form-group row">
@@ -263,6 +270,21 @@
             updateData(event.currentTarget.attributes.dataid.value);
             loadData();
         })
+        $('ul.pagination').on('click', '.previous', (event) => {
+        let page = $('input#page').val();
+        $('input#page').val(parseInt(page) - 1);
+        loadData();
+      })
+      $('ul.pagination').on('click', '.pageNow', (event) => {
+        let page = $('input#page').val();
+        $('input#page').val($(event.currentTarget).attr('data-page'));
+        loadData();
+      })
+      $('ul.pagination').on('click', '.next', (event) => {
+        let page = $('input#page').val();
+        $('input#page').val(parseInt(page) + 1);
+        loadData();
+      })
     });
 
     const showData = (id) => {
@@ -308,6 +330,12 @@
         })
         .done(( result ) => {
         const data = result.result
+        const value = result.result
+          let pageNow = $('#page').val();
+          if(value.length == 0 && pageNow != '1') {
+            $('#page').val(pageNow - 1);
+            loadData();
+          }
         let html = '';
         data.forEach(item => {
             html += `<tr>
@@ -325,6 +353,18 @@
             </tr>`
         });
         $('table tbody').html(html);
+        let currentPage = result.currentPage;
+          let totalPage = result.totalPage;
+          let url = result.url;
+          let pagination =
+            `<li class="page-item ${currentPage <=1 ? ' disabled' : ''}"><button class="page-link previous" tabindex="-1" aria-disabled="true">Previous</button></li>\n`;
+          for (let i = 1; i <= totalPage; i++) {
+            pagination +=
+              `<li class="page-item ${currentPage == i ? 'active': ''}"><button class="page-link pageNow" data-page='${i}'>${i}</button></li>\n`
+          }
+          pagination +=
+            `<li class="page-item ${currentPage >= totalPage ? ' disabled' : ''}"><button class="page-link next">Next</button></li>`;
+          $('nav ul').html(pagination);
         });
     }
 
