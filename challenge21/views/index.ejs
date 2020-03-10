@@ -260,6 +260,7 @@
         })
         $('.save-data').on('click', '.btn-save', (event) => {
             updateData(event.currentTarget.attributes.dataid.value);
+            console.log(event.currentTarget.attributes)
             loadData();
         })
 
@@ -316,7 +317,7 @@
 
     const loadData = () => {
         const filter = $('#search').serializeArray();
-        console.log(filter)
+        // console.log(filter)
         $.ajax({
         method: "GET",
         url: API_URL,
@@ -386,7 +387,7 @@
             url: `${API_URL}/${id}`,
             dataType: 'json',
             data : {
-                id: `'${id}'`,
+                id: `${id}`,
                 string: $('#inputString').val(),
                 integer: $('#inputInteger').val(),
                 float: $('#inputFloat').val(),
