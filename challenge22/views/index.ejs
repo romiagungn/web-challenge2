@@ -275,7 +275,6 @@
             //jquery update save by button
             $('.save-data').on('click', '.btn-save', (event) => {
                 updateData(event.currentTarget.attributes.dataid.value);
-                console.log(event.currentTarget.attributes)
                 loadData();
             })
             //jquery pgnation
@@ -305,10 +304,10 @@
                 dataType: "json"
             }).done((result) => {
                 const data = result.result
-                const value = result.result
                 let html = '';
-                data.forEach(item => {
-                html += `<tr>
+                data.forEach((item, index) => {
+                    html += `<tr>
+                <td>${index + 1}</td>        
                 <td>${item.string}</td>
                 <td>${item.integer}</td>
                 <td>${item.float}</td>
@@ -320,9 +319,25 @@
                 <button type="button" class = "btn btn-danger btn-delete btn-sm" dataid = "${item._id}">Delete
                 </td>
                 </tr>`
-                    });
-                    $('table tbody').html(html);
                 });
+                $('table tbody').html(html);
+
+                let currentPage = result.currentPage;
+                let totalPage = result.totalPage;
+                let url = result.url;
+                let pagination =
+                    `<li class="page-item ${currentPage <=1 ? ' disabled' : ''}">
+                    <button class="page-link previous" tabindex="-1" aria-disabled="true">Previous</button></li>\n`;
+                for (let i = 1; i <= totalPage; i++) {
+                    pagination +=
+                    `<li class="page-item ${currentPage == i ? 'active': ''}">
+                    <button class="page-link pageNow" data-page='${i}'>${i}</button></li>\n`
+                }
+                pagination +=
+                    `<li class="page-item ${currentPage >= totalPage ? ' disabled' : ''}">
+                    <button class="page-link next">Next</button></li>`;
+                $('nav ul').html(pagination);
+            });
         }
 
         const showData = (id) => {
@@ -350,18 +365,6 @@
                         <option value="false" selected>false</option>`
                     }
                     $('#inputBoolean').html(a);
-                    let currentPage = result.currentPage;
-                    let totalPage = result.totalPage;
-                    let url = result.url;
-                    let pagination =
-                        `<li class="page-item ${currentPage <= 1 ? ' disabled' : ''}"><button class="page-link previous" tabindex="-1" aria-disabled="true">Previous</button></li>\n`;
-                    for (let i = 1; i <= totalPage; i++) {
-                        pagination +=
-                            `<li class="page-item ${currentPage == i ? 'active' : ''}"><button class="page-link pageNow" data-page='${i}'>${i}</button></li>\n`
-                    }
-                    pagination +=
-                        `<li class="page-item ${currentPage >= totalPage ? ' disabled' : ''}"><button class="page-link next">Next</button></li>`;
-                    $('nav ul').html(pagination);
                 })
                 .fail((err) => {
                     console.log('terjadi error', err)
