@@ -17,28 +17,44 @@ const findAll = (req, res) => {
     if (input.check_float && input.searchFloat) {
         querySearch.float = input.searchFloat
     }
-    if (input.startDate && input.endDate && input.check_date) {
+    if (input.check_date && input.startDate && input.endDate) {
+        querySearch.check_date = { $gte: input.startDate, $lte: input.endDate }
     }
     if (input.check_boolean && input.boolean) {
         querySearch.boolean = input.boolean
     }
 
-    models.find(querySearch)
-        .then(data => {
-            res.json({
-                result: data
-            });
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Something wrong while retrieving products."
-            });
-        });
-};
+    // start logic for pagination 
+    const currentPage = req.query.page || 1;
+    const limit = 5;
+    const offset = (currentPage - 1) * limit;
+    const url = req.url === '/' ? '/?page=1' : req.url;
 
-//ambil data satu
-const getOne = (req, res) => {
+    models.find(querySearch, (err, data) => {
+        let totalData = data.length
+        models.find(querySearch, (err, data) => {
+            if (err) res.json(err);
+
+            res.json({
+                result: data,
+                url,
+                currentPage,
+                totalPage: Math.ceil(totalData / limit),
+                query: req.query
+            })
+        }).skip(offset).limit(limit)
+    })
+}
+
+//get data by one ID
+const findOne = (req, res) => {
     models.findById(req.params.id)
         .then(data => {
+            if (!data) {
+                return res.status(404).send({
+                    message: "Product not found with id " + req.params.id
+                });
+            }
             res.json({
                 result: data
             });
@@ -121,7 +137,7 @@ const deleteData = (req, res) => {
 
 module.exports = {
     findAll,
-    getOne,
+    findOne,
     create,
     update,
     deleteData
