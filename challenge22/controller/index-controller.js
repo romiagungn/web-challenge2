@@ -17,8 +17,8 @@ const findAll = (req, res) => {
     if (input.check_float && input.searchFloat) {
         querySearch.float = input.searchFloat
     }
-    if (input.check_date && input.startDate && input.endDate) {
-        querySearch.check_date = { $gte: input.startDate, $lte: input.endDate }
+    if (input.check_date) {
+        querySearch.date = {$gte: req.query.startDate, $lte: req.query.endDate}
     }
     if (input.check_boolean && input.boolean) {
         querySearch.boolean = input.boolean
