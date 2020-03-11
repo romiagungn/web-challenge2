@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/api', dataController.findAll)
-router.get('/api/:id', dataController.getOne)
+router.get('/api/:id', dataController.findOne)
 router.post('/api', dataController.create)
 router.put('/api/:id', dataController.update)
 router.delete('/api/:id', dataController.deleteData)
