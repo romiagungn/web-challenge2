@@ -2,6 +2,53 @@ const moment = require('moment');
 const models = require('../models/models');
 moment.locale('id');
 
+// load data
+const findAll = (req, res) => {
+    // logic filter 
+    let input = req.query;
+    let querySearch = {}
+    // logic filter
+    if (input.check_string && input.searchString) {
+        querySearch.string = input.searchString
+    }
+    if (input.check_integer && input.searchInteger) {
+        querySearch.integer = input.searchInteger
+    }
+    if (input.check_float && input.searchFloat) {
+        querySearch.float = input.searchFloat
+    }
+    if (input.startDate && input.endDate && input.check_date) {
+    }
+    if (input.check_boolean && input.boolean) {
+        querySearch.boolean = input.boolean
+    }
+
+    models.find(querySearch)
+        .then(data => {
+            res.json({
+                result: data
+            });
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Something wrong while retrieving products."
+            });
+        });
+};
+
+//ambil data satu
+const getOne = (req, res) => {
+    models.findById(req.params.id)
+        .then(data => {
+            res.json({
+                result: data
+            });
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Something wrong while creating the product."
+            });
+        });
+}
+
 //Create new Product
 const create = (req, res) => {
     // Request validation
@@ -20,33 +67,6 @@ const create = (req, res) => {
             });
         });
 };
-// load data
-const findAll = (req, res) => {
-    models.find()
-        .then(data => {
-            res.json({
-                result: data
-            });
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Something wrong while retrieving products."
-            });
-        });
-};
-
-//ambil data satu
-const getOne = (req, res) => {
-    models.findById(req.params.id)
-        .then(data => {
-            res.json({
-                result:data
-            });
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || "Something wrong while creating the product."
-            });
-        });
-}
 
 // Update a product
 const update = (req, res) => {
