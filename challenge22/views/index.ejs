@@ -16,72 +16,95 @@
 <body>
     <h1 class="container">BREAD(Browse,Read,Edit,Add,Delete)</h1>
     <h1 class="container">Filter</h1>
+
+    <!-- modal add -->
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="modalSearch2"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSearch2">Search Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" >
+                    <form id="search">
+                        <input type="hidden" id="page" name="page" value="1">
+                        <div class="form-group row">
+                            <label for="id" class="col-sm-1 col-form-label">
+                                <input class="form-check-input" type="checkbox" name="check_id">
+                                ID
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="searchid" placeholder="ID" value="" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label">
+                                <input class="form-check-input" type="checkbox" name="check_string"> String
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="searchString" id="searchString"
+                                    placeholder="String" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label">
+                                <input class="form-check-input" type="checkbox" name="check_integer"> Integer
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" placeholder="Integer" id="searchInteger"
+                                    name="searchInteger" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label">
+                                <input class="form-check-input" type="checkbox" name="check_float"> Float
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="searchFloat" placeholder="Float"
+                                    name="searchFloat" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label">
+                                <input class="form-check-input" type="checkbox" name="check_date"> Date
+                            </label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" placeholder="Start Date" name="startDate"
+                                    value="">
+                            </div>
+                            <label class="col-sm-1 col-form-label">TO</label>
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" placeholder="End Date" name="endDate" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label">
+                                <input class="form-check-input" type="checkbox" id="defaultCheck1"
+                                    name="check_boolean">Boolean
+                            </label>
+                            <div class="col-sm-7">
+                                <select id="boolean" class="form-control" name="boolean">
+                                    <option disabled selected>Choose the boolean...</option>
+                                    <option value="true"> True</option>
+                                    <option value="false">False</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <button type="submit" class="btn btn-primary btn-search" data-toggle="modal"
+                                data-target="#modalSearch">Search</button>
+                            <a href="/" type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="container">
-        <form id="search">
-            <input type="hidden" id="page" name="page" value="1">
-            <div class="form-group row">
-                <label for="id" class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" name="check_id">
-                    ID
-                </label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" name="searchid" placeholder="ID" value="">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" name="check_string"> String
-                </label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" name="searchString" id="searchString" placeholder="String"
-                        value="">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" name="check_integer"> Integer
-                </label>
-                <div class="col-sm-7">
-                    <input type="number" class="form-control" placeholder="Integer" id="searchInteger"
-                        name="searchInteger" value="">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" name="check_float"> Float
-                </label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" name="searchFloat" placeholder="Float" name="searchFloat"
-                        value="">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" name="check_date"> Date
-                </label>
-                <div class="col-sm-2">
-                    <input type="date" class="form-control" placeholder="Start Date" name="startDate" value="">
-                </div>
-                <label class="col-sm-1 col-form-label">TO</label>
-                <div class="col-sm-2">
-                    <input type="date" class="form-control" placeholder="End Date" name="endDate" value="">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-1 col-form-label">
-                    <input class="form-check-input" type="checkbox" id="defaultCheck1" name="check_boolean">Boolean
-                </label>
-                <div class="col-sm-7">
-                    <select id="boolean" class="form-control" name="boolean">
-                        <option disabled selected>Choose the boolean...</option>
-                        <option value="true"> True</option>
-                        <option value="false">False</option>
-                    </select>
-                </div>
-            </div>
-    </div>
-    <div class="container">
-        <button type="submit" class="btn btn-primary btn-search">Search</button>
+        <button type="button" class="btn btn-primary btn-success" data-toggle="modal"
+            data-target="#modalSearch">Search</button>
         <a href="/" class="btn btn-danger">Reset</a>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">Add</button>
     </div>
@@ -224,7 +247,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                </div>
                 <div class="container save-data">
                     <button type="submit" id="submit-data" class="btn btn-outline-primary btn-save" dataid=""
                         data-dismiss="modal">Save</button>
@@ -237,22 +260,24 @@
 
     <!-- Modal Delete Produk-->
     <form id="form-delete">
-        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <strong>Anda yakin mau menghapus data ini?</strong>
-                </div>
-                <div class="modal-footer">
-                    <input type="text" id="id" name="id" class="form-control id" required disabled>
-                    <button type="button"  class="btn btn-default">Close</button>
-                    <button type="submit" id="delete-data" class="btn btn-success btn-delete" dataid=""
-                    data-dismiss="modal">Delete</button>
-                </div>
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Anda yakin mau menghapus data ini?</strong>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="id" name="id" class="form-control id" required disabled>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" id="delete-data" class="btn btn-success btn-delete" dataid=""
+                            data-dismiss="modal">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -338,7 +363,7 @@
                 .fail((err) => {
                     console.log('terjadi error', err)
                 })
-            }
+        }
 
         const showData = (id) => {
             $.ajax({
@@ -371,9 +396,9 @@
                 .fail((err) => {
                     console.log('terjadi error', err)
                 })
-            }
+        }
 
-            const removeData = (id) => {
+        const removeData = (id) => {
             $.ajax({
                 method: "DELETE",
                 url: `${API_URL}/${id}`,
@@ -406,9 +431,9 @@
                 <td>${item.date}</td>
                 <td>${item.boolean}</td>
                 <td>
-                <button type="button" class = "btn btn-info btn-edit btn-sm" dataid = "${item._id}"
+                <button type="button" class = "btn btn-info btn-edit mr-1" dataid = "${item._id}"
                 data-toggle="modal" data-target="#modalEdit">Edit
-                <button type="button" class = "btn btn-danger btn-delete btn-sm" dataid = "${item._id}"
+                <button type="button" class = "btn btn-danger btn-delete " dataid = "${item._id}"
                 data-toggle="modal" data-target="#modalDelete">Delete
                 </td>
                 </tr>`
@@ -419,11 +444,11 @@
                 let totalPage = result.totalPage;
                 let url = result.url;
                 let pagination =
-                    `<li class="page-item ${currentPage <=1 ? ' disabled' : ''}">
+                    `<li class="page-item ${currentPage <= 1 ? ' disabled' : ''}">
                     <button class="page-link previous" tabindex="-1" aria-disabled="true">Previous</button></li>\n`;
                 for (let i = 1; i <= totalPage; i++) {
                     pagination +=
-                    `<li class="page-item ${currentPage == i ? 'active': ''}">
+                        `<li class="page-item ${currentPage == i ? 'active' : ''}">
                     <button class="page-link pageNow" data-page='${i}'>${i}</button></li>\n`
                 }
                 pagination +=
